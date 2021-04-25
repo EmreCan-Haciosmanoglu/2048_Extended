@@ -89,9 +89,17 @@ int Puppet::GetPoints()
 
 void Puppet::Draw()
 {
+	Can::DrawQuadParameters params= Can::DrawQuadParameters();
+	params.Size = glm::vec2(0.9f);
 	for (int x = 0; x < m_Dimensions; x++)
+	{
 		for (int y = 0; y < m_Dimensions; y++)
-			Can::Renderer2D::DrawQuad({ x, y }, { 0.9f, 0.9f }, m_Parent->GetCards()[m_State[x + y * m_Dimensions]]);
+		{
+			params.Position = { x, y, 0.0f };
+			params.texture = m_Parent->GetCards()[m_State[x + y * m_Dimensions]];
+			Can::Renderer2D::DrawQuad(params);
+		}
+	}
 }
 
 void Puppet::Play(int direction)
